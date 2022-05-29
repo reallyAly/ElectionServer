@@ -37,16 +37,20 @@ public class Calculation extends Thread{
             
             try {
                 
-               for(Candidate candidate: this.candidates) {
-                   for(Urn urn: this.urns){
-                       for(Votes votes: urn.getVotes()) {
-                           for(Candidate urnCandidate: votes.getCandidates()) {
-                               if(candidate.getId() == urnCandidate.getId()) {
-                                  candidate.setVotes(candidate.getVotes() + urnCandidate.getVotes());
-                               }
-                           }
-                       }
-                   }
+               if(!this.urns.isEmpty()) {
+                   
+                    for(Candidate candidate: this.candidates) {
+                        for(Urn urn: this.urns){
+                            for(Votes votes: urn.getVotes()) {
+                                for(Candidate urnCandidate: votes.getCandidates()) {
+                                    if(candidate.getId() == urnCandidate.getId()) {
+                                       candidate.setVotes(candidate.getVotes() + urnCandidate.getVotes());
+                                    }
+                                }
+                            }
+                        }
+                    }
+               
                }
                
                
@@ -54,7 +58,7 @@ public class Calculation extends Thread{
                    this.candidatesTable.setValueAt(this.candidates.get(i).getName(), i, 0);
                    this.candidatesTable.setValueAt(this.candidates.get(i).getVotes(), i, 1);
                }
-
+             
                sleep(5000);
 
             } catch (InterruptedException ex) {

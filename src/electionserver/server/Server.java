@@ -6,25 +6,32 @@ package electionserver.server;
 
 import electionserver.server.model.Urn;
 import electionserver.server.model.Candidate;
-import java.rmi.AlreadyBoundException;
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JTable;
+import java.rmi.Naming;
 
 /**
  *
  * @author alysson
  */
-public class Server implements ElectionInterface{
+public class Server extends UnicastRemoteObject implements  ElectionInterface{
     
-    private ArrayList<Urn> urns;
+    private ArrayList<Urn> urns = new ArrayList<>();
     
     private ArrayList<Candidate> candidates;
-
+    
+    private JTable candidatesTable;
+    
+    public Server(JTable candidatesTable) throws RemoteException {
+        super();
+        this.candidatesTable = candidatesTable;
+    }
+   
     @Override
     public boolean sendVotes(Urn urn) throws RemoteException{
         
@@ -46,32 +53,26 @@ public class Server implements ElectionInterface{
         return this.candidates;
     }
     
-    public void addCandidate(Candidate candidate) {
-         this.candidates.add(candidate);
+    public void setCandidates(ArrayList<Candidate> candidates) {
+         this.candidates = candidates;
     }
     
-    public void startServer(ArrayList<Candidate> candidates) throws IllegalArgumentException {
+    public void startServer(ArrayList<Candidate> candidates) throws IllegalArgumentException, MalformedURLException, RemoteException {
         
         if(candidates.isEmpty()) {
             throw new IllegalArgumentException("Please, add at least two candidates");
         }
         
-        try {
-            Server s = new Server();
+        // My names server
+        Registry register = LocateRegistry.createRegistry(1099);
             
-            // My Skeleton
-            ElectionInterface skeleton = (ElectionInterface) UnicastRemoteObject.exportObject(s, 0);
+        Naming.rebind("electionserver", new Server(this.candidatesTable));
             
-            // My names server
-            Registry register = LocateRegistry.createRegistry(1099);
-            
-            register.bind("electionserver", skeleton);
-            
-            System.out.println("Waiting for requests...");
-            
-        } catch (RemoteException | AlreadyBoundException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        Thread calculation = new Thread(new Calculation(this.candidatesTable, this.urns, this.candidates));
+                    
+        calculation.start();
+      
+        System.out.println("Waiting for requests...");
     }
+    
 }

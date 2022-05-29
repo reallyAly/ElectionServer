@@ -4,17 +4,37 @@
  */
 package electionserver.server;
 
+import electionserver.server.model.Candidate;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 /**
  *
  * @author alysson
  */
 public class CalculationView extends javax.swing.JFrame {
+    
+    private ArrayList<Candidate> candidates;
+    
+    private Server server;
 
     /**
      * Creates new form ServerView
+     * @param candidates
+     * @throws java.rmi.RemoteException
+     * @throws java.net.MalformedURLException
      */
-    public CalculationView() {
+    public CalculationView(ArrayList<Candidate> candidates) throws RemoteException, IllegalArgumentException, MalformedURLException {
+        
         initComponents();
+        
+        this.server = new Server(this.candidatesTable);
+        
+        this.server.setCandidates(candidates);
+        
+        this.server.startServer(candidates);
+        
     }
 
     /**
@@ -56,6 +76,11 @@ public class CalculationView extends javax.swing.JFrame {
         jLabel1.setText("Election in progress...");
 
         closeVoteButton.setText("Close Vote");
+        closeVoteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeVoteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,6 +119,10 @@ public class CalculationView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void closeVoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeVoteButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_closeVoteButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable candidatesTable;
