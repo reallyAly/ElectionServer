@@ -51,4 +51,8 @@ public class Candidate implements Serializable {
         return this.votes;
     }
     
+    public void setVotes(int totalVotes) {
+        this.votes = totalVotes;
+    }
+    
 }
