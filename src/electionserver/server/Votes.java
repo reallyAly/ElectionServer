@@ -12,22 +12,11 @@ import java.util.ArrayList;
  * @author alysson
  */
 public class Votes implements Serializable{
-     
-    private int urnId;
-    
+ 
     private ArrayList<Candidate> candidates;
 
-    public Votes(int urnId, ArrayList<Candidate> candidates) {
-        this.urnId = urnId;
+    public Votes(ArrayList<Candidate> candidates) {
         this.candidates = candidates;
-    }
-
-    public int getUrnId() {
-        return urnId;
-    }
-
-    public void setUrnId(int urnId) {
-        this.urnId = urnId;
     }
 
     public ArrayList<Candidate> getCandidate() {
