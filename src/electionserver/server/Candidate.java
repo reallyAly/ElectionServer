@@ -15,6 +15,8 @@ public class Candidate implements Serializable {
     private int id;
     
     private String name;
+    
+    private int votes;
 
     public Candidate(int id, String name) {
         this.id = id;
@@ -41,7 +43,12 @@ public class Candidate implements Serializable {
         this.name = name;
     }
     
+    public void addVote() {
+        this.votes++;
+    }
     
+    public int getVotes() {
+        return this.votes;
+    }
     
-   
 }
