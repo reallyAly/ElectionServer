@@ -20,7 +20,7 @@ public class Votes implements Serializable{
         this.candidates = candidates;
     }
 
-    public ArrayList<Candidate> getCandidate() {
+    public ArrayList<Candidate> getCandidates() {
         return candidates;
     }
 
