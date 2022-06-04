@@ -25,15 +25,13 @@ public class CalculationView extends javax.swing.JFrame {
      * @throws java.rmi.RemoteException
      * @throws java.net.MalformedURLException
      */
-    public CalculationView(ArrayList<Candidate> candidates) throws RemoteException, IllegalArgumentException, MalformedURLException {
+    public CalculationView(ArrayList<Candidate> candidates) throws RemoteException, IllegalArgumentException, MalformedURLException, InterruptedException {
         
         initComponents();
         
-        this.server = new Server(this.candidatesTable);
-        
-        this.server.setCandidates(candidates);
-        
-        this.server.startServer(candidates);
+        this.server = new Server(this.candidatesTable, candidates);
+ 
+        this.server.startServer();
         
     }
 
@@ -50,7 +48,6 @@ public class CalculationView extends javax.swing.JFrame {
         candidatesTable = new javax.swing.JTable();
         electionServerTitle = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        closeVoteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -75,13 +72,6 @@ public class CalculationView extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 255, 0));
         jLabel1.setText("Election in progress...");
 
-        closeVoteButton.setText("Close Vote");
-        closeVoteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeVoteButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,10 +83,6 @@ public class CalculationView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(411, 411, 411)
                 .addComponent(electionServerTitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(422, 422, 422)
-                .addComponent(closeVoteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
@@ -112,21 +98,14 @@ public class CalculationView extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(closeVoteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeVoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeVoteButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_closeVoteButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable candidatesTable;
-    private javax.swing.JButton closeVoteButton;
     private javax.swing.JLabel electionServerTitle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

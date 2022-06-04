@@ -35,11 +35,6 @@
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="422" max="-2" attributes="0"/>
-              <Component id="closeVoteButton" min="-2" pref="150" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="874" max="-2" attributes="0"/>
               <EmptySpace pref="66" max="32767" attributes="0"/>
@@ -55,9 +50,7 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="472" max="-2" attributes="0"/>
-              <EmptySpace pref="30" max="32767" attributes="0"/>
-              <Component id="closeVoteButton" min="-2" pref="51" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <EmptySpace pref="95" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -117,14 +110,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Election in progress..."/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="closeVoteButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Close Vote"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeVoteButtonActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

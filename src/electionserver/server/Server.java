@@ -27,20 +27,23 @@ public class Server extends UnicastRemoteObject implements  ElectionInterface{
     
     private JTable candidatesTable;
     
-    public Server(JTable candidatesTable) throws RemoteException {
+    private Candidate candidate;
+    
+    public Server(JTable candidatesTable, ArrayList<Candidate> candidates) throws RemoteException {
         super();
         this.candidatesTable = candidatesTable;
+        this.candidates = candidates;
     }
    
     @Override
     public boolean sendVotes(Urn urn) throws RemoteException{
-        
         if(!this.urns.isEmpty()){
             for(int i = 0; i < this.urns.size(); i++) {
                 if(urn.getUrnId() == this.urns.get(i).getUrnId()){
-                    this.urns.add(i, urn);
+                    this.urns.set(i, urn);
                 }
             }
+            StoreUrns.setUrns(this.urns);
         }else{
             this.urns.add(urn);
         }
@@ -57,22 +60,28 @@ public class Server extends UnicastRemoteObject implements  ElectionInterface{
          this.candidates = candidates;
     }
     
-    public void startServer(ArrayList<Candidate> candidates) throws IllegalArgumentException, MalformedURLException, RemoteException {
+    public void startServer() throws IllegalArgumentException, MalformedURLException, RemoteException, InterruptedException {
         
-        if(candidates.isEmpty()) {
+        if(this.candidates.isEmpty() || this.candidates.size() < 2) {
             throw new IllegalArgumentException("Please, add at least two candidates");
         }
         
         // My names server
         Registry register = LocateRegistry.createRegistry(1099);
             
-        Naming.rebind("electionserver", new Server(this.candidatesTable));
+        Naming.rebind("electionserver", new Server(this.candidatesTable, this.candidates));
             
         Thread calculation = new Thread(new Calculation(this.candidatesTable, this.urns, this.candidates));
                     
         calculation.start();
-      
+        
         System.out.println("Waiting for requests...");
+    }
+    
+    @Override
+    public void sayHello()
+    {
+        System.out.println("Hello Dev");
     }
     
 }

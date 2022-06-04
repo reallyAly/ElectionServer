@@ -1,4 +1,4 @@
-package electionserver.server;
+package electionserver.client;
 
 import electionserver.server.model.Urn;
 import electionserver.server.model.Candidate;

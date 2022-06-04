@@ -4,7 +4,6 @@
  */
 package electionserver.server.model;
 
-import electionserver.server.model.Candidate;
 import java.io.Serializable;
 import java.util.ArrayList;
 

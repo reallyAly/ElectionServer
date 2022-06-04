@@ -8,9 +8,6 @@ import electionserver.server.model.Candidate;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
 
 /**
  *
@@ -231,26 +228,26 @@ public class ServerView extends javax.swing.JFrame {
         if(this.candidates.isEmpty()){
             
             this.jOptionPane1.showMessageDialog(this,
-                    "Please, select one or more candidates on table",
-                    "Delete candidate failed",
+                    "Please, add candidates",
+                    "Server Start Failed",
                     jOptionPane1.WARNING_MESSAGE);
             
         }else{
             
             try {
                 new CalculationView(this.candidates).setVisible(true);
+                this.dispose();
             } catch (RemoteException ex) {
                 this.jOptionPane1.showMessageDialog(this,
                     ex.getMessage(),
                     "Server Start Failed",
                     jOptionPane1.WARNING_MESSAGE);
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException | MalformedURLException | InterruptedException ex) {
+                this.jOptionPane1.showMessageDialog(this,
+                    ex.getMessage(),
+                    "Server Start Failed",
+                    jOptionPane1.WARNING_MESSAGE);
             }
-            
-            this.dispose();
             
         }
         

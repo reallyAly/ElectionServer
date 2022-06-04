@@ -15,9 +15,9 @@ public class Urn implements Serializable{
     
     private int urnId;
     
-    private ArrayList<Votes> votes;
+    private Votes votes;
 
-    public Urn(int urnId, ArrayList<Votes> votes) {
+    public Urn(int urnId, Votes votes) {
         this.urnId = urnId;
         this.votes = votes;
     }
@@ -30,11 +30,11 @@ public class Urn implements Serializable{
         this.urnId = urnId;
     }
 
-    public ArrayList<Votes> getVotes() {
+    public Votes getVotes() {
         return votes;
     }
 
-    public void setVotes(ArrayList<Votes> votes) {
+    public void setVotes(Votes votes) {
         this.votes = votes;
     }
     
