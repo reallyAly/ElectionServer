@@ -37,15 +37,22 @@ public class Server extends UnicastRemoteObject implements  ElectionInterface{
    
     @Override
     public boolean sendVotes(Urn urn) throws RemoteException{
+        
         if(!this.urns.isEmpty()){
+            
             for(int i = 0; i < this.urns.size(); i++) {
+                
                 if(urn.getUrnId() == this.urns.get(i).getUrnId()){
                     this.urns.set(i, urn);
                 }
+                
             }
+            
             StoreUrns.setUrns(this.urns);
+            
         }else{
             this.urns.add(urn);
+            StoreUrns.setUrns(this.urns);
         }
         
         return true;

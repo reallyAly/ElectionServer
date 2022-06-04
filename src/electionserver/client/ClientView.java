@@ -201,12 +201,22 @@ public class ClientView extends javax.swing.JFrame {
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         try {
-            boolean result = this.client.processVote(this.candidateCode);
             
+            boolean result = false;
+            
+            if(this.candidateCode != 0) {
+               result = this.client.processVote(this.candidateCode);
+            }
+ 
             if(result) {
                 this.jDialog1.setVisible(false);
                 this.jOptionPane1.showMessageDialog(this,
                     "Your vote has been process with success",
+                    "Success",
+                    jOptionPane1.INFORMATION_MESSAGE);
+            }else if(this.candidateCode == 0){
+               this.jOptionPane1.showMessageDialog(this,
+                    "Your blank vote has been process with success",
                     "Success",
                     jOptionPane1.INFORMATION_MESSAGE);
             }
